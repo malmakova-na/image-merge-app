@@ -7,7 +7,7 @@ const apiRouter = new express.Router();
 
 apiRouter.post('/upload', api.upload);
 apiRouter.get('/list', api.getAll);
-apiRouter.get('/image/:id', api.download)
+apiRouter.get('/image/:id', api.getImg)
 apiRouter.delete('/image/:id', api.deleteImg);
 apiRouter.get('/merge', api.merge );
 

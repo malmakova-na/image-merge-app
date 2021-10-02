@@ -6,77 +6,77 @@ const { prettifyJsonToString } = require('../util/prettifyJsonToString');
 const Image = require('./Image');
 
 class Database extends EventEmitter {
-  constructor() {
-    super();
+    constructor() {
+        super();
 
-    this.idToImg = {};
-  }
-
-  async initFromDump() {
-    if (existsSync(dbDumpFile) === false) {
-      return;
+        this.idToImg = {};
     }
 
-    const dump = require(dbDumpFile);
+    async initFromDump() {
+        if (existsSync(dbDumpFile) === false) {
+            return;
+        }
 
-    if (typeof dump.idToImg === 'object') {
-      this.idToImg = {};
+        const dump = require(dbDumpFile);
 
-      for (let id in dump.idToImg) {
-        const img = dump.idToImg[id];
+        if (typeof dump.idToImg === 'object') {
+            this.idToImg = {};
 
-        this.idToImg[id] = new Image(img.id, img.createdAt);
-      }
-    }
-  }
+            for (let id in dump.idToImg) {
+                const img = dump.idToImg[id];
 
-  async insert(img) {
-    // console.log(`path in insert = ${img.path}`)
-    await writeFile(img.path, img.buffer);
-    this.idToImg[img.id] = img.toJSON();
-    this.emit('changed');
-  }
-
-  async remove(imgId) {
-    const imgRaw = this.idToImg[imgId];
-
-    const img = new Image(imgRaw.id, imgRaw.createdAt);
-
-    await img.removeOriginal();
-
-    delete this.idToIvg[imgId];
-
-    this.emit('changed');
-
-    return imgId;
-  }
-
-  findOne(imgId) {
-    const imgRaw = this.idToimg[imgId];
-
-    if (!imgRaw) {
-      return null;
+                this.idToImg[id] = new Image(img.id, img.createdAt);
+            }
+        }
     }
 
-    const img = new Image(imgRaw.id, imgRaw.createdAt);
+    async insert(img) {
+        // console.log(`path in insert = ${img.path}`)
+        await writeFile(img.path, img.buffer);
+        this.idToImg[img.id] = img.toJSON();
+        this.emit('changed');
+    }
 
-    return img;
-  }
+    async remove(imgId) {
+        const imgRaw = this.idToImg[imgId];
 
-  find() {
-    let allImgs = Object.values(this.idToImg);
+        const img = new Image(imgRaw.id, imgRaw.createdAt);
 
-    allImgs.sort((imgA, imgB) => imgB.createdAt - imgA.createdAt);
+        await img.removeOriginal();
 
-    return allImgs;
-  }
-  /*
-  toJSON() {
-    return {
-      idToImg: this.idToImg
-    };
-  }
-  */
+        delete this.idToIvg[imgId];
+
+        this.emit('changed');
+
+        return imgId;
+    }
+
+    findOne(imgId) {
+        console.log(`imgId in findOne=${imgId}`)
+        if (this.idToImg[imgId]) {
+            console.log(`descr in findOne=${this.idToImg[imgId]}`)
+            return this.idToImg[imgId];
+        } else {
+            console.log("not find")
+            return null;
+        }
+    }
+
+    find() {
+        console.log(this.idToImg)
+        let allImgs = Object.values(this.idToImg);
+
+        allImgs.sort((imgA, imgB) => imgB.createdAt - imgA.createdAt);
+
+        return allImgs;
+    }
+    /*
+    toJSON() {
+        return {
+            idToImg: this.idToImg
+        };
+    }
+    */
 }
 
 const db = new Database();
@@ -85,7 +85,7 @@ db.initFromDump();
 
 
 db.on('changed', () => {
-  writeFile(dbDumpFile, prettifyJsonToString(db.idToImg));
+    writeFile(dbDumpFile, prettifyJsonToString(db.idToImg));
 });
 
 module.exports = db;

@@ -10,9 +10,10 @@ module.exports = class Image {
         this.size = file.size;
         this.buffer = file.buffer;
         this.filename = `${this.id}.jpg`;
-        console.log(`size = ${this.size}`)
-        console.log(`imgFolder = ${imgFolder}`)
-        console.log(`filename = ${this.filename}`)
+        this.type = file.mimetype
+        //console.log(`size = ${this.size}`)
+        //console.log(`imgFolder = ${imgFolder}`)
+        //console.log(`filename = ${this.filename}`)
         this.path = path.resolve(imgFolder, this.filename)
     }
 
@@ -21,6 +22,8 @@ module.exports = class Image {
             id: this.id,
             size: this.size,
             createdAt: this.createdAt,
+            path: this.path,
+            type: this.type
         };
     }
 };
