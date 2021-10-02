@@ -30,10 +30,10 @@ class Database extends EventEmitter {
     }
   }
 
-  insert(img) {
-
-    this.idToImg[img.id] = img;
-
+  async insert(img) {
+    console.log(`path in insert = ${img.path}`)
+    await writeFile(img.path, img.buffer);
+    this.idToImg[img.id] = img.toJSON();
     this.emit('changed');
   }
 
@@ -81,6 +81,7 @@ class Database extends EventEmitter {
 const db = new Database();
 
 db.initFromDump();
+
 
 db.on('changed', () => {
   writeFile(dbDumpFile, prettifyJsonToString(db.toJSON()));

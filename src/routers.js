@@ -1,10 +1,11 @@
 const express = require('express')
-const file = require('./file')
+// const file = require('./file')
+
 const api = require('./controllers/api')
 
 const apiRouter = new express.Router();
 
-apiRouter.post('/upload', file.single('image'), api.upload);
+apiRouter.post('/upload', api.upload);
 apiRouter.get('/list', api.getAll);
 apiRouter.get('/image/:id', api.download)
 apiRouter.delete('/image/:id', api.deleteImg);
