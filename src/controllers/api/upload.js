@@ -6,5 +6,5 @@ module.exports = (req, res) => {
     // console.log(file)
     const image = new Image(file);
     db.insert(image);
-    return res.json({ id: req.id });
+    return res.json(image.toJSON());
 }
