@@ -1,7 +1,7 @@
 const { EventEmitter } = require('events');
 const { existsSync } = require('fs');
 const { dbDumpFile } = require('../config');
-const { writeFile } = require('../util/fs');
+const { writeFile, removeFile } = require('../util/fs');
 const { prettifyJsonToString } = require('../util/prettifyJsonToString');
 const Image = require('./Image');
 
@@ -38,16 +38,18 @@ class Database extends EventEmitter {
     }
 
     async remove(imgId) {
-        const imgRaw = this.idToImg[imgId];
-
-        const img = new Image(imgRaw.id, imgRaw.createdAt);
-
-        await img.removeOriginal();
-
-        delete this.idToIvg[imgId];
-
-        this.emit('changed');
-
+        if (this.idToImg[imgId]) {
+            const path = this.idToImg[imgId].path;
+            await removeFile(path)
+            console.log("before delete:")
+            console.log(this.idToImg)
+            delete this.idToImg[imgId];
+            console.log("after delete:")
+            console.log(this.idToImg)
+            this.emit('changed');
+        } else {
+            console.log("Not have such id")
+        }
         return imgId;
     }
 
