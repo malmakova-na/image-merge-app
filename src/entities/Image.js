@@ -10,6 +10,7 @@ module.exports = class Image {
         this.size = file.size;
         this.buffer = file.buffer;
         this.filename = `${this.id}.jpg`;
+        console.log(`size = ${this.size}`)
         console.log(`imgFolder = ${imgFolder}`)
         console.log(`filename = ${this.filename}`)
         this.path = path.resolve(imgFolder, this.filename)
