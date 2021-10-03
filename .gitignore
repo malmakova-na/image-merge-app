@@ -1,6 +1,5 @@
 #db
 src/db/imgs/*
-src/db/dump.json
 # Logs
 logs
 *.log
