@@ -55,6 +55,7 @@ class Database extends EventEmitter {
 
     findOne(imgId) {
         console.log(`imgId in findOne=${imgId}`)
+        //console.log(this.idToImg)
         if (this.idToImg[imgId]) {
             console.log(`descr in findOne=${this.idToImg[imgId]}`)
             return this.idToImg[imgId];
