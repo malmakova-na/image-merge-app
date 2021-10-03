@@ -26,14 +26,14 @@ module.exports = (req, res) => {
 
     replaceBackground(front, back, color, threshold)
     .then((readableStream) => {
-        let resultPath = path.resolve(imgFolder, `./result.jpg`)
-        const writableStream = fs.createWriteStream(resultPath);
-        readableStream.pipe(writableStream);
-        readableStream.on('end',()=>{
-            res.sendFile(resultPath);
-        })
-    })
-    
-     
+      let link = path.resolve(imgFolder, `./result.jpg`)
+      const writableStream = fs.createWriteStream(link);
+      readableStream.pipe(writableStream);
+      readableStream.on('end',()=>{
+          res.type('image/jpg')
+          res.sendFile(link);
+      })
 
+    })
+  
 };
