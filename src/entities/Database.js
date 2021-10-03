@@ -41,11 +41,11 @@ class Database extends EventEmitter {
         if (this.idToImg[imgId]) {
             const path = this.idToImg[imgId].path;
             await removeFile(path)
-            console.log("before delete:")
-            console.log(this.idToImg)
+            //console.log("before delete:")
+            //console.log(this.idToImg)
             delete this.idToImg[imgId];
-            console.log("after delete:")
-            console.log(this.idToImg)
+            //console.log("after delete:")
+            //console.log(this.idToImg)
             this.emit('changed');
         } else {
             console.log("Not have such id")
@@ -54,13 +54,13 @@ class Database extends EventEmitter {
     }
 
     findOne(imgId) {
-        console.log(`imgId in findOne=${imgId}`)
+        //console.log(`imgId in findOne=${imgId}`)
         //console.log(this.idToImg)
         if (this.idToImg[imgId]) {
-            console.log(`descr in findOne=${this.idToImg[imgId]}`)
+            //console.log(`descr in findOne=${this.idToImg[imgId]}`)
             return this.idToImg[imgId];
         } else {
-            console.log("not find")
+            //console.log("not find")
             return null;
         }
     }

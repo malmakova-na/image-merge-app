@@ -12,9 +12,7 @@ module.exports = (req, res) => {
     }    
     
     let imgFrontPath = db.findOne(req.query.front).path;
-    //console.log("imageFront_path=",db.findOne(req.query.front).path)
     let imgBackPath = db.findOne(req.query.back).path;
-    //console.log("imageBack_path=",imgBackPath)
 
     
     const front = fs.createReadStream(imgFrontPath);
@@ -26,8 +24,8 @@ module.exports = (req, res) => {
 
     replaceBackground(front, back, color, threshold)
     .then((readableStream) => {
-      let link = path.resolve(imgFolder, `./result.jpg`)
-      const writableStream = fs.createWriteStream(link);
+      let resultPath = path.resolve(imgFolder, `./result.jpg`)
+      const writableStream = fs.createWriteStream(resultPath);
       readableStream.pipe(writableStream);
       readableStream.on('end',()=>{
           res.type('image/jpg')

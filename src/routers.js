@@ -15,6 +15,6 @@ apiRouter.get('/merge', api.merge );
 exports.apiRouter = apiRouter;
 
 
-const mainRouter = new express.Router();
-mainRouter.get('/ping',(req, res) => res.json({ ping: 'pong' }));
-exports.mainRouter = mainRouter;
+//const mainRouter = new express.Router();
+//mainRouter.get('/ping',(req, res) => res.json({ ping: 'pong' }));
+//exports.mainRouter = mainRouter;
