@@ -28,8 +28,8 @@ module.exports = (req, res) => {
       const writableStream = fs.createWriteStream(resultPath);
       readableStream.pipe(writableStream);
       readableStream.on('end',()=>{
-          res.type('image/jpg')
-          res.sendFile(link);
+        
+          res.sendFile(resultPath);
       })
 
     })
